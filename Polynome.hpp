@@ -9,15 +9,15 @@ class Polynome
 
     public:
 
-    Polynome( unsigned int & ,const double * &);
-    Polynome = delete ;
-    Polynome(const polynome & src);
+    Polynome( unsigned int  ,const double * );
+    Polynome() = delete ;
+    Polynome(const Polynome & src);
     ~Polynome() ;
     inline const double getDegree(){ return degre; };
     Polynome deriver() const ;
-    Polynome operator = (const polynome & p );
-    friend bool operator (const Polynome & p);
-    friend Polynome operateur( const polynome & p1 , const polynome & p2 );
+    Polynome operator = (const Polynome & p );
+    friend bool operator== (const Polynome & p1, const Polynome & p2);
+    friend Polynome operator+ ( const Polynome & p1 , const Polynome & p2 );
 
 };
 

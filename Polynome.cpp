@@ -1,20 +1,20 @@
-
 #include <iostream>
+#include <c.math>
 #include "Polynome.hpp"
 
 Polynome :: Polynome(unsigned int _degre , const double * _coef )
 : degre(_degre) , coef(nullptr)
 {
-    coef = new double [degre + 1]
+    coef = new double [degre + 1];
     for ( size_t i = 0 ; i<= degre ; i++){
         coef[i] = _coef[i];
     }
 }
 
 Polynome :: Polynome( const Polynome & src)
-: degre(src.degre)
+: degre(src.degre), coef(src.coef)
 {
-    coef = new double [ degre + 1];
+    coef = new double [degre+1];
     for ( size_t i = 0 ; i<= degre ; i++){
         coef[i] = src.coef[i];
     }
@@ -24,48 +24,82 @@ Polynome :: ~Polynome()
 {
     delete [] coef ;
 }
- Polynome:: Polynome deriver() const
+ Polynome Polynome:: deriver() const
 {
-    const double val[1] = {0}
+    const double val[1] = {0};
     if(degre== 0){
         return Polynome(0 , val);
     }
-    // Fonction à terminer 
+    double * p = new double [degre];
+    for (size_t i = 1 ; i<= degre ; i++){
+        p[i-1] = coef[i] * i;
+    }
+    Polynome res(degre-1 , p);
+    delete [] p;
+    return res ;
 }
 
-Polynome:: operator = (const polynome & p )
+Polynome Polynome:: operator = (const Polynome & p )
 {
     degre = p.degre;
     delete [] coef;
     for ( size_t i = 1 ; i <= degre ; i++){
         coef[i] = p.coef[i];
     }
+    return Polynome(degre , coef);
 }
 
-bool operator (const Polynome & p)
+bool operator== (const Polynome & p1, const Polynome & p2)
 {
-    if( degre > p.degre){
+    if( p1.degre != p2.degre){
         return false;
        }
-    if( degre < p.degre){
-        return false;
+ 
+    for ( size_t i = 0 ; i<= p1.degre ; i++){
+        if (p1.coef[i] != p2.coef[i])
+            return false;
        }
-    if( degre == p.degre){
         return true;
-       }
-       
-    for ( size_t i = 0 ; i< degre ; i++){
-        coef[i] = p.coef[i];
-       }
-
-       // A VÉRIFIER 
 } 
 
-Polynome operateur( const polynome & p1 , const polynome & p2 )
+Polynome operator+ ( const Polynome & p1 , const Polynome & p2 )
 {
-    const double big = (p1.degre >= p2.degre ) ? p1 : p2;
-    const double small = ( p1.degre < p2.degre) ? p1 : p2;
-    double res = big;
-    res += small;
+    const Polynome big = (p1.degre >= p2.degre ) ? p1 : p2;
+    const Polynome small = ( p1.degre < p2.degre) ? p1 : p2;
+    Polynome res(big);
+    for ( size_t i = 0 ; i<= small.degre ; i++){
+        res.coef[i] += small.coef[i] ;
+    }
+    return res ; 
+}
+ostream & operator<< (ostream & os , const Polynome & p ){
+    for(size_t i = p.degre + 1 ; i>0 ; i--){
+        os<< '+'<<p.coef[i-1]<<"x^"<< i-1;
+    return os;
+    }
+}
 
+inline double & operator [] (size_t i)
+{
+    if(i<= degre)
+    return coef[i];
+    else
+    throw_runtime_error("erreur");
+}
+
+inline const double & operator[] (size_t i)const
+{
+     if(i<= degre)
+    return coef[i];
+    else
+    throw_runtime_error("erreur");
+}
+
+double Polynome :: operator() (double x)
+{
+    double res = 0;
+    for ( size_t i =0 ; i<= degre ; ++i) 
+    res += coef [i] * pow(x , i);
+
+    return res ;
 }
