@@ -73,8 +73,21 @@ Polynome operator+ ( const Polynome & p1 , const Polynome & p2 )
     return res ; 
 }
 std::ostream& operator<< (std::ostream& os , const Polynome & p ){
-    for(size_t i = p.degre + 1 ; i>0 ; i--){
-        os<< '+'<<p.coef[i-1]<<"x^"<< i-1;
+     bool premier = true;
+    for(size_t i = p.degre ; i>0 ; i--){
+        if( p.coef[i] > 0){
+            os<< '+';
+        }
+        else(p.coef[i] <0){
+            os<<'-';
+        }
+        if(i==0){
+            if(p.coef[i]< 0){
+                os<< -p.coef[i];
+            }
+            else
+            os<< p.coef[i];
+        }
     }
     return os;
 }
