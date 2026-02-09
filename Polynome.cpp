@@ -79,21 +79,6 @@ ostream & operator<< (ostream & os , const Polynome & p ){
     }
 }
 
-inline double & operator [] (size_t i)
-{
-    if(i<= degre)
-    return coef[i];
-    else
-    throw_runtime_error("erreur");
-}
-
-inline const double & operator[] (size_t i)const
-{
-     if(i<= degre)
-    return coef[i];
-    else
-    throw_runtime_error("erreur");
-}
 
 double Polynome :: operator() (double x)
 {
