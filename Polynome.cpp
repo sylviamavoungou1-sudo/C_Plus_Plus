@@ -1,5 +1,5 @@
 #include <iostream>
-#include <c.math>
+#include <cmath>
 #include "Polynome.hpp"
 
 Polynome :: Polynome(unsigned int _degre , const double * _coef )
@@ -72,12 +72,13 @@ Polynome operator+ ( const Polynome & p1 , const Polynome & p2 )
     }
     return res ; 
 }
-ostream & operator<< (ostream & os , const Polynome & p ){
+std::ostream& operator<< (std::ostream& os , const Polynome & p ){
     for(size_t i = p.degre + 1 ; i>0 ; i--){
         os<< '+'<<p.coef[i-1]<<"x^"<< i-1;
-    return os;
     }
+    return os;
 }
+
 
 
 double Polynome :: operator() (double x)
