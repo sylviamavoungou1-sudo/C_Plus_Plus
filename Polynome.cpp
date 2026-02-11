@@ -59,7 +59,7 @@ bool operator== (const Polynome & p1, const Polynome & p2)
         if (p1.coef[i] != p2.coef[i])
             return false;
        }
-        return true;
+        return true; 
 } 
 
 Polynome operator+ ( const Polynome & p1 , const Polynome & p2 )
@@ -72,28 +72,81 @@ Polynome operator+ ( const Polynome & p1 , const Polynome & p2 )
     }
     return res ; 
 }
-std::ostream& operator<< (std::ostream& os , const Polynome & p ){
-     bool premier = true;
-    for(size_t i = p.degre ; i>0 ; i--){
-        if( p.coef[i] > 0){
-            os<< '+';
-        }
-        else(p.coef[i] <0){
-            os<<'-';
-        }
-        if(i==0){
-            if(p.coef[i]< 0){
-                os<< -p.coef[i];
-            }
-            else
-            os<< p.coef[i];
-        }
+
+
+Polynome operator- ( const Polynome & p1 , const Polynome & p2 )
+
+{
+    double* temporelle = new double[p2.degre +1];
+    for( size_t i = 0 ; i<= p2.degre ; i++){
+        temporelle[i] = - 1 *(p2.coef[i]);
     }
-    return os;
+    Polynome polysoustraction(p2.degre , temporelle);
+    delete[] temporelle;
+    const Polynome& big = (p1.degre >= polysoustraction.degre ) ? p1 : polysoustraction;
+    const Polynome& small = ( p1.degre < polysoustraction.degre) ? p1 : polysoustraction;
+    Polynome res(big);
+    for ( size_t i = 0 ; i<= small.degre ; i++){
+        res.coef[i] += small.coef[i] ;
+    }
+    return res ; 
 }
 
 
 
+
+
+std::ostream& operator<< (std::ostream& os , const Polynome & p ){
+     bool premier_monome = true;
+     for(size_t i = p.degre; i > 0; i--){
+
+        double mon_coef = p.coef[i];
+
+        if(mon_coef != 0){ // Ignorer les coefficients nuls
+            if(!premier_monome){  // Si ce n'est pas le premier monome
+                if(mon_coef > 0)
+                    os << '+';
+                else
+                    os << '-';
+            }
+            else {  // Si c'est le premier monome
+                if(mon_coef < 0)
+                    os << '-';
+                premier_monome = false;
+            }
+
+            // Si le coefficient est +1, on n'affiche pas le 1, juste "x"
+            if(mon_coef == 1){
+                os << "x"; // Affiche juste 'x'
+            }
+            // Si le coefficient est -1, on affiche "-x"
+            else if(mon_coef == -1){
+                os << "-x"; // Affiche '-x'
+            }
+            else {
+                os << mon_coef;  // Affichage normal du coefficient
+                // Si ce n'est pas un terme constant (i > 0), on affiche "x^i"
+                if(i > 0) {
+                    os << "x";
+                    if(i > 1) {
+                        os << "^" << i; // Afficher x^i si le degré est supérieur à 1
+                    }
+                }
+            }
+        }
+    }
+
+  if(p.coef[0] != 0 || premier_monome == false) { // Si le terme constant est non nul
+        if(!premier_monome) {
+            os << (p.coef[0] > 0 ? "+" : "-");
+        }
+        os << p.coef[0]; // Affichage du terme constant
+    }
+
+     return os;
+
+      }
+        
 double Polynome :: operator() (double x)
 {
     double res = 0;
@@ -102,3 +155,7 @@ double Polynome :: operator() (double x)
 
     return res ;
 }
+
+
+
+

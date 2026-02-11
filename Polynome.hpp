@@ -11,7 +11,7 @@ class Polynome
 
     Polynome( unsigned int  ,const double * );
     Polynome() = delete ;
-    Polynome(const Polynome & src);
+    Polynome(const Polynome & src); 
     ~Polynome() ;
     inline const double getDegree(){ return degre; };
     Polynome deriver() const ;
@@ -34,6 +34,7 @@ inline const double & operator[] (size_t i)const
     double operator() (double x);
     friend bool operator== (const Polynome & p1, const Polynome & p2);
     friend Polynome operator+ ( const Polynome & p1 , const Polynome & p2 );
+     friend Polynome operator- ( const Polynome & p1 , const Polynome & p2 );
     friend std ::ostream& operator<< (std::ostream& os , const Polynome & p );
 };
 
