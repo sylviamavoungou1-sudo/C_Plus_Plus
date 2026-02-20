@@ -1,0 +1,18 @@
+hello buddy
+can you build me an hello world c++ program in this folder
+
+sylvia@sylvia-Latitude-5320:~/Documents/C_Plus_Plus_Projects$
+
+coz this is where i will put all my c++ programs
+even folders i will clone from github later
+
+you should also configure in there an .vscode folder responsible to execute c++ programs no matter the name
+coz i do not want to create for each program his .vscode folder , no, but instead they will share the same .vscode responsible to handle c++ programs executions with g++
+i want you also to make sure that the g++ is installed and if not install it for me
+and at the end execute tha helloworld program like this to verify if it workes
+
+g++ -c helloworld.cpp
+g++ -o helloworld helloworld.o
+./helloworld
+
+i use Ubuntu as OS
