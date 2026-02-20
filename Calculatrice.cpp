@@ -10,11 +10,11 @@ int main()
 	emplacements[i] = nullptr;
    }
    for(size_t i = 0 ; i<10 ; i++){
-	if (emplacements[i] = nullptr){
+	if (emplacements[i] == nullptr){
 		cout<< "Emplacement ["<< i+1 << "]"<< ": aucun polynome"<< endl;
    }
    else
-   		cout<< * (emplacement[i])<< endl;
+   		cout<< * (emplacements[i])<< endl;
 }
 
 int choix;
